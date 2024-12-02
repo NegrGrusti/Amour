@@ -1,0 +1,172 @@
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+      },
+    ],
+  },
+};
+
+module.exports = nextConfig;
+'use client';
+
+import { Header } from '@/components/layout/Header';
+import '@/styles/globals.css';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="bg-[#F5E1DA] text-[#333333]">
+        <Header />
+        <main className="container mx-auto px-6 py-8">{children}</main>
+      </body>
+    </html>
+  );
+}
+'use client';
+
+import { Facebook, Instagram, Twitter } from 'lucide-react';
+
+export function Header() {
+  return (
+    <header className="flex justify-between items-center px-6 py-4 bg-[#E5B4B0] text-white">
+      <nav className="flex gap-4">
+        <a href="/" className="hover:underline">HOME</a>
+        <a href="/services" className="hover:underline">SERVICE</a>
+        <a href="/booking" className="hover:underline">BOOKING</a>
+        <a href="/specialists" className="hover:underline">SPECIALIST</a>
+        <a href="/contact" className="hover:underline">CONTACT</a>
+      </nav>
+      <div className="flex gap-3">
+        <a href="#"><Facebook className="w-5 h-5" /></a>
+        <a href="#"><Instagram className="w-5 h-5" /></a>
+        <a href="#"><Twitter className="w-5 h-5" /></a>
+      </div>
+    </header>
+  );
+}
+'use client';
+
+import Image from 'next/image';
+import { Statistics } from '@/components/features/Statistics';
+import { ServiceGrid } from '@/components/features/ServiceGrid';
+import { ProductShowcase } from '@/components/features/ProductShowcase';
+
+export default function HomePage() {
+  return (
+    <div>
+      <section className="relative w-full h-[60vh] flex items-center justify-center bg-[#F5E6E0]">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-[#333333]">Luxury Beauty Salon</h1>
+          <p className="text-lg mt-4">Elevate your beauty with our expert services</p>
+        </div>
+      </section>
+      <Statistics />
+      <ServiceGrid />
+      <ProductShowcase />
+    </div>
+  );
+}
+'use client';
+
+export function Statistics() {
+  const stats = [
+    { label: 'Happy Clients', value: '10K+' },
+    { label: 'Years of Service', value: '15+' },
+    { label: 'Awards Won', value: '20+' },
+    { label: 'Specialists', value: '50+' },
+  ];
+
+  return (
+    <section className="py-8 bg-[#F5E6E0]">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        {stats.map((stat) => (
+          <div key={stat.label} className="flex flex-col">
+            <span className="text-2xl font-bold text-[#E5B4B0]">{stat.value}</span>
+            <span className="text-sm">{stat.label}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+'use client';
+
+import { Button } from '@/components/shared/Button';
+
+export function ServiceGrid() {
+  const services = [
+    { name: 'Manicure', img: 'https://picsum.photos/200/300?random=1' },
+    { name: 'Eyebrow Styling', img: 'https://picsum.photos/200/300?random=2' },
+    { name: 'Hair Styling', img: 'https://picsum.photos/200/300?random=3' },
+    { name: 'Tattoo', img: 'https://picsum.photos/200/300?random=4' },
+  ];
+
+  return (
+    <section className="py-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {services.map((service) => (
+          <div key={service.name} className="bg-white rounded-lg overflow-hidden shadow-lg">
+            <img src={service.img} alt={service.name} className="w-full h-40 object-cover" />
+            <div className="p-4 text-center">
+              <h3 className="font-bold text-lg">{service.name}</h3>
+              <Button label="BOOK NOW" className="mt-4" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+'use client';
+
+export function ProductShowcase() {
+  const products = [
+    { name: 'Nail Polish', img: 'https://picsum.photos/200/300?random=5' },
+    { name: 'Eyebrow Kit', img: 'https://picsum.photos/200/300?random=6' },
+  ];
+
+  return (
+    <section className="py-8 bg-[#F5E6E0]">
+      <h2 className="text-2xl font-bold mb-6 text-center">Our Products</h2>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <div key={product.name} className="bg-white rounded-lg overflow-hidden shadow-lg">
+            <img src={product.img} alt={product.name} className="w-full h-40 object-cover" />
+            <div className="p-4 text-center">
+              <h3 className="font-bold text-lg">{product.name}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+'use client';
+
+export function Button({ label, className }: { label: string; className?: string }) {
+  return (
+    <button className={`bg-[#FF9A8B] text-white px-4 py-2 rounded-md hover:bg-[#E58B7A] ${className}`}>
+      {label}
+    </button>
+  );
+}
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        roseGold: '#E5B4B0',
+        nude: '#F5E6E0',
+        coralPink: '#FF9A8B',
+        darkGray: '#333333',
+        warmBeige: '#F5E1DA',
+      },
+    },
+  },
+  plugins: [],
+};
